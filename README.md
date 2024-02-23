@@ -1,6 +1,7 @@
 # Fluid Simulation in Python
 
 This program is a stable fluids simulation implemented in Python.
+
 ![illustration](capture.png)
 
 ## Getting Started
@@ -26,5 +27,5 @@ python3 src/stable_fluids.py
 ## Authors
 
 * Eloi Dieme
-Inspired by a YouTube video by Felix Koehler.
-Original paper by Jos Stam (1999).
+* Inspired by a YouTube video by Felix Koehler.
+* Original paper by Jos Stam (1999).
