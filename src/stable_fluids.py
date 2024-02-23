@@ -6,8 +6,8 @@ import cmasher as cmr
 from tqdm import tqdm
 
 DOMAIN_SIZE = 1.0
-N_POINTS = 41
-N_TIME_STEPS = 100
+N_POINTS = 100
+N_TIME_STEPS = 200
 TIME_STEP_LENGTH = 0.1
 
 KINEMATIC_VISCOSITY = 0.0001
@@ -135,6 +135,15 @@ def main():
         )
 
         return gradient_applied
+    
+    def curl_2d(vector_field):
+        curl_applied = (
+            partial_derivative_x(vector_field[..., 1])
+            -
+            partial_derivative_y(vector_field[..., 0])
+        )
+
+        return curl_applied
 
     def advect(field, vector_field):
         backtraced_positions = np.clip(
@@ -239,6 +248,8 @@ def main():
         velocities_prev = velocities_projected
 
         # plot
+        curl = curl_2d(velocities_projected)
+        plt.contourf(X, Y, curl, cmap=cmr.redshift, levels=100)
         plt.quiver(
             X,
             Y,
