@@ -6,8 +6,8 @@ import cmasher as cmr
 from tqdm import tqdm
 
 DOMAIN_SIZE = 1.0
-N_POINTS = 100
-N_TIME_STEPS = 200
+N_POINTS = 70
+N_TIME_STEPS = 40
 TIME_STEP_LENGTH = 0.1
 
 KINEMATIC_VISCOSITY = 0.0001
