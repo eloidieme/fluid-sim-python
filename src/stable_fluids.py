@@ -33,7 +33,7 @@ def forcing_function(time, point):
                 &
                 (point[1] < 0.3)
             ),
-            np.array([0.0, 0.1]),
+            np.array([0.0, 1.0]),
             np.array([0.0, 0.0]),
         )
     )
@@ -72,11 +72,13 @@ def main():
             (
                 field[2: , 1:-1]
                 -
-                field[0:-2, 1:1]
+                field[0:-2, 1:-1]
             ) / (
                 2 * element_length
             )
         )
+
+        return diff
 
     def partial_derivative_y(field):
         diff = np.zeros_like(field)
@@ -90,6 +92,8 @@ def main():
                 2 * element_length
             )
         )
+
+        return diff
 
     def laplace(field):
         diff = np.zeros_like(field)
@@ -158,9 +162,9 @@ def main():
 
         diffusion_applied = (
             vector_field
-            *
+            -
             KINEMATIC_VISCOSITY
-            /
+            *
             TIME_STEP_LENGTH
             *
             laplace(vector_field)
@@ -174,6 +178,9 @@ def main():
         poisson_applied = laplace(field)
 
         return poisson_applied
+    
+    plt.style.use("dark_background")
+    plt.figure(figsize=(5,5), dpi=160)
 
     velocities_prev = np.zeros(vector_shape)
 
@@ -231,10 +238,17 @@ def main():
         # next time step
         velocities_prev = velocities_projected
 
-
-
-
-    print(coordinates.shape)
+        # plot
+        plt.quiver(
+            X,
+            Y,
+            velocities_projected[..., 0],
+            velocities_projected[..., 1],
+            color="dimgray",
+        )
+        plt.draw()
+        plt.pause(0.0001)
+        plt.clf()
 
 if __name__ == '__main__':
     main()
